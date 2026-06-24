@@ -79,8 +79,11 @@
 
 @media (max-width: 900px) {
   .grid { grid-template-columns: 1fr 1fr; }
+  .brand { grid-column: 1 / -1; }
 }
 
 @media (max-width: 540px) {
   .grid { grid-template-columns: 1fr; }
+  .brand { grid-column: auto; }
+  .footer { padding: 40px 0 0; }
 }

@@ -162,6 +162,13 @@
   .bars { gap: 8px; }
 }
 
+@media (max-width: 768px) {
+  .section { padding: 72px 0; }
+  .chart { padding: 24px 16px; }
+  .facts { gap: 12px; }
+  .factCard { padding: 16px; }
+}
+
 @media (max-width: 480px) {
   .section { padding: 60px 0; }
   .chart { padding: 20px 16px; }

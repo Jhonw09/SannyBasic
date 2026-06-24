@@ -184,6 +184,10 @@
 }
 
 @media (max-width: 900px) {
+  .context { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
   .context { grid-template-columns: 1fr; }
 }
 

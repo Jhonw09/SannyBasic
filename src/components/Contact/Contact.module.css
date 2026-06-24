@@ -132,6 +132,10 @@
 }
 
 @media (max-width: 860px) {
+  .grid { grid-template-columns: 1fr 1fr; max-width: 100%; }
+}
+
+@media (max-width: 580px) {
   .grid { grid-template-columns: 1fr; max-width: 480px; }
 }
 
