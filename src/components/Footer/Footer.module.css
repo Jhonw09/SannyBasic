@@ -1,0 +1,86 @@
+.footer {
+  background: #0f2235;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 60px 0 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 48px;
+}
+
+.brand .logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+  color: #f0f7ff;
+}
+
+.brand p {
+  font-size: 0.88rem;
+  color: #93c5fd;
+  line-height: 1.65;
+  max-width: 240px;
+  margin-bottom: 20px;
+}
+
+.social {
+  display: flex;
+  gap: 10px;
+}
+
+.social a {
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.social a:hover { background: var(--primary); border-color: var(--primary); }
+
+.col h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f0f7ff;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.col ul { display: flex; flex-direction: column; gap: 10px; }
+
+.col ul a {
+  font-size: 0.88rem;
+  color: #93c5fd;
+  transition: var(--transition);
+}
+
+.col ul a:hover { color: #fff; }
+
+.bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 20px 0;
+  text-align: center;
+}
+
+.bottom p {
+  font-size: 0.82rem;
+  color: #64a0cc;
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 540px) {
+  .grid { grid-template-columns: 1fr; }
+}

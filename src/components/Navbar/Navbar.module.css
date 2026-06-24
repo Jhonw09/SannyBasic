@@ -1,0 +1,111 @@
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid transparent;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+}
+
+.brand {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 2px;
+}
+
+.links li { list-style: none; }
+
+.links a {
+  display: block;
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color 0.2s, background 0.2s;
+}
+
+.links a:hover { color: var(--text); background: rgba(14,165,233,0.1); }
+
+.active {
+  color: var(--primary) !important;
+  background: rgba(14,165,233,0.12);
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+  transform-origin: center;
+}
+
+@media (max-width: 768px) {
+  .burger { display: flex; }
+
+  .links {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 16px; right: 16px;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px;
+    gap: 2px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.25s, transform 0.25s;
+  }
+
+  .links.open {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+
+  .links a { font-size: 0.9rem; padding: 10px 14px; border-radius: 8px; }
+}
+
+@media (max-width: 480px) {
+  .inner { padding: 0 16px; }
+}

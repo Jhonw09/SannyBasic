@@ -1,0 +1,27 @@
+{
+  "name": "sannybasic",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "framer-motion": "^12.41.0",
+    "react": "^19.2.7",
+    "react-countup": "^6.5.3",
+    "react-dom": "^19.2.7",
+    "react-intersection-observer": "^10.0.3",
+    "react-scroll": "^1.9.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "oxlint": "^1.69.0",
+    "vite": "^8.1.0"
+  }
+}
