@@ -1,14 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styles from './Prevention.module.css';
 
 const tips = [
   {
     icon: '🙌',
     title: 'Lave as Mãos Corretamente',
-    desc: 'A lavagem das mãos é a medida mais simples e eficaz contra todas as 5 doenças do site. O vírus da Hepatite A e as bactérias da Cólera, Febre Tifoide e E. coli sobrevivem nas mãos por horas.',
-    pct: 95,
-    pctLabel: 'Eficácia: redução de infecções fecal-orais (OMS)',
-    diseases: ['Hepatite A', 'Cólera', 'Febre Tifoide', 'E. coli'],
+    desc: 'A lavagem das mãos é a medida mais simples e eficaz contra todas as 7 doenças do site. O vírus da Hepatite A e as bactérias da Cólera, Febre Tifoide e E. coli sobrevivem nas mãos por horas.',
+    diseases: ['Hepatite A', 'Hepatite E', 'Cólera', 'Febre Tifoide', 'E. coli', 'Giardíase', 'Leptospirose'],
     steps: [
       'Lave com água e sabão por pelo menos 20 segundos — o tempo de cantar "Parabéns pra você" duas vezes',
       'Esfregue entre os dedos, as palmas, o dorso das mãos e embaixo das unhas',
@@ -22,8 +20,6 @@ const tips = [
     icon: '💧',
     title: 'Trate e Armazene a Água com Segurança',
     desc: 'A água é a principal via de transmissão da Cólera, Hepatite A, Febre Tifoide e Leptospirose. Água com aparência limpa pode estar contaminada — vírus e bactérias são invisíveis a olho nu.',
-    pct: 99,
-    pctLabel: 'Eficácia: eliminação de patógenos pela fervura (OMS)',
     diseases: ['Cólera', 'Hepatite A', 'Febre Tifoide', 'Leptospirose'],
     steps: [
       'Ferva a água por pelo menos 1 minuto — isso elimina 100% dos vírus e bactérias causadores dessas doenças',
@@ -39,8 +35,6 @@ const tips = [
     icon: '🥦',
     title: 'Higiene e Preparo dos Alimentos',
     desc: 'Alimentos mal higienizados e mal cozidos são a porta de entrada da E. coli, Salmonella (Febre Tifoide), Cólera e Hepatite A. A bactéria não muda o cheiro, o sabor nem a aparência do alimento.',
-    pct: 88,
-    pctLabel: 'Eficácia: redução de surtos por alimentos contaminados (ANVISA)',
     diseases: ['E. coli', 'Febre Tifoide', 'Cólera', 'Hepatite A'],
     steps: [
       'Lave frutas, verduras e legumes em água corrente e deixe de molho por 15 minutos em solução de hipoclorito: 1 colher de sopa de água sanitária para 1 litro de água',
@@ -57,8 +51,6 @@ const tips = [
     icon: '💉',
     title: 'Vacinação em Dia',
     desc: 'A vacina é a forma mais eficaz de proteção individual. Contra a Hepatite A, uma das doenças mais comuns por falta de saneamento, a eficácia da vacina é superior a 95%.',
-    pct: 96,
-    pctLabel: 'Eficácia: vacina contra Hepatite A (MS/SUS)',
     diseases: ['Hepatite A', 'Febre Tifoide'],
     steps: [
       'Vacina contra Hepatite A: 2 doses, disponível gratuitamente no SUS para crianças a partir de 15 meses — protege por toda a vida',
@@ -73,8 +65,6 @@ const tips = [
     icon: '🦺',
     title: 'Proteção em Enchentes e Áreas de Risco',
     desc: 'Enchentes são o principal cenário de surtos de Leptospirose no Brasil. A água mistura esgoto, urina de rato e lama — criando condições ideais para a Leptospira entrar pelo corpo.',
-    pct: 85,
-    pctLabel: 'Eficácia: redução de risco com uso de EPI em enchentes (MS)',
     diseases: ['Leptospirose'],
     steps: [
       'Nunca entre em água de enchente sem proteção — use botas de borracha cano alto e luvas',
@@ -90,8 +80,6 @@ const tips = [
     icon: '🐀',
     title: 'Controle de Roedores e Vetores',
     desc: 'O rato é o principal reservatório da Leptospira — ele carrega a bactéria sem adoecer e contamina o ambiente pela urina. Moscas e baratas transportam bactérias da Cólera, Febre Tifoide e E. coli nas patas.',
-    pct: 80,
-    pctLabel: 'Eficácia: redução de casos com controle de roedores (FUNASA)',
     diseases: ['Leptospirose', 'Cólera', 'Febre Tifoide', 'E. coli'],
     steps: [
       'Mantenha lixeiras sempre tampadas — lixo a céu aberto é o principal atrativo para ratos',
@@ -108,11 +96,9 @@ const tips = [
     icon: '🚽',
     title: 'Saneamento e Descarte Correto',
     desc: 'A ausência de rede de esgoto é a raiz de todas as doenças desta página. 35 milhões de brasileiros ainda não têm acesso à rede de esgoto (IBGE 2022), expondo comunidades inteiras a Cólera, Hepatite A e Febre Tifoide.',
-    pct: 82,
-    pctLabel: 'Eficácia: redução de doenças com saneamento adequado (IBGE)',
     diseases: ['Cólera', 'Hepatite A', 'Febre Tifoide', 'Leptospirose'],
     steps: [
-      'Use sempre o banheiro — nunca defèque a céu aberto, perto de rios, poços ou fontes de água',
+      'Use sempre o banheiro — nunca defeque a céu aberto, perto de rios, poços ou fontes de água',
       'Se não houver rede de esgoto, instale uma fossa séptica adequada — a Funasa oferece orientação gratuita',
       'Nunca jogue lixo em rios, córregos ou terrenos baldios — resíduos contaminam a água que abastece outras comunidades',
       'Descarte medicamentos vencidos em farmácias — não os jogue na pia ou no vaso sanitário',
@@ -124,8 +110,6 @@ const tips = [
     icon: '🩺',
     title: 'Reconheça os Sinais de Alerta',
     desc: 'Saber identificar os primeiros sintomas faz a diferença entre um tratamento simples e uma internação grave. Muitas dessas doenças têm cura fácil se tratadas nas primeiras 48 a 72 horas.',
-    pct: 78,
-    pctLabel: 'Eficácia: redução de mortalidade com diagnóstico precoce (MS)',
     diseases: ['Hepatite A', 'Leptospirose', 'Cólera', 'Febre Tifoide', 'E. coli'],
     steps: [
       'Febre acima de 38°C que não cede após 2 dias — especialmente com dor de cabeça intensa, procure médico',
@@ -141,8 +125,6 @@ const tips = [
     icon: '🧼',
     title: 'Higiene Doméstica e Ambiental',
     desc: 'A limpeza do ambiente onde vivemos reduz a presença de vetores (moscas, baratas, ratos) que transportam patógenos causadores de Cólera, Febre Tifoide e E. coli diretamente para os alimentos.',
-    pct: 76,
-    pctLabel: 'Eficácia: redução de vetores com higiene ambiental (FUNASA)',
     diseases: ['Cólera', 'Febre Tifoide', 'E. coli', 'Leptospirose'],
     steps: [
       'Limpe a casa com água sanitária diluída (1 copo para 1 balde d\'água) em pisos, bancadas e banheiros regularmente',
@@ -150,49 +132,30 @@ const tips = [
       'Lave louças, talheres e utensílios imediatamente após o uso — não deixe de molho por horas',
       'Mantenha telas em janelas e portas para impedir entrada de moscas e mosquitos',
       'Não acumule entulho, caixas velhas ou objetos sem uso — são abrigo para baratas e ratos',
-      'Limpe e desinfete geladeira a cada 15 dias — verifiifique alimentos vencidos e remóva restos',
+      'Limpe e desinfete a geladeira a cada 15 dias — verifique alimentos vencidos e remova restos',
       'Em caso de infestação de baratas ou ratos, acione a prefeitura (CCZ) — o serviço é gratuito',
     ],
   },
 ];
 
-function Bar({ pct, visible }) {
-  return (
-    <div className={styles.barTrack}>
-      <div className={styles.barFill} style={{ width: visible ? `${pct}%` : '0%' }} />
-    </div>
-  );
-}
-
 export default function Prevention() {
-  const [visible, setVisible] = useState(false);
   const [expanded, setExpanded] = useState(null);
   const ref = useRef(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.1 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
 
   return (
     <section className={styles.section} id="prevencao" ref={ref}>
       <div className="container">
         <div className={styles.header}>
           <span className={styles.pill}>🛡️ Prevenção</span>
-          <h2>Como se Prevenir</h2>
-          <p>Medidas comprovadas que protegem contra todas as doenças desta página — clique em um card para ver o passo a passo completo</p>
+          <h2>Como se prevenir</h2>
+          <p>Clique em um card para ver o passo a passo completo</p>
         </div>
 
         <div className={styles.grid}>
-          {tips.map(({ icon, title, desc, pct, pctLabel, diseases, steps }, i) => {
+          {tips.map(({ icon, title, desc, diseases, steps }, i) => {
             const isOpen = expanded === i;
             return (
-              <div
-                key={title}
-                className={`${styles.card} ${isOpen ? styles.cardOpen : ''}`}
-                style={{ animationDelay: `${i * 0.08}s` }}
-              >
+              <div key={title} className={`${styles.card} ${isOpen ? styles.cardOpen : ''}`}>
                 <button className={styles.cardHeader} onClick={() => setExpanded(isOpen ? null : i)}>
                   <div className={styles.cardTop}>
                     <span className={styles.cardIcon}>{icon}</span>
@@ -204,23 +167,20 @@ export default function Prevention() {
                     </div>
                     <span className={styles.chevron}>{isOpen ? '▲' : '▼'}</span>
                   </div>
-                  <p className={styles.cardDesc}>{desc}</p>
-                  <div className={styles.barRow}>
-                    <Bar pct={pct} visible={visible} />
-                    <span className={styles.pctLabel}>Eficácia: {pct}%</span>
-                  </div>
-                  <small className={styles.effectLabel}>{pctLabel}</small>
+                  <p className={`${styles.cardDesc} ${isOpen ? styles.cardDescFull : ''}`}>{desc}</p>
                 </button>
 
                 {isOpen && (
-                  <ul className={styles.stepsList}>
-                    {steps.map((step, j) => (
-                      <li key={j} className={styles.stepItem}>
-                        <span className={styles.stepNum}>{j + 1}</span>
-                        <span>{step}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className={styles.expandedContent}>
+                    <ul className={styles.stepsList}>
+                      {steps.map((step, j) => (
+                        <li key={j} className={styles.stepItem}>
+                          <span className={styles.stepNum}>{j + 1}</span>
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
             );

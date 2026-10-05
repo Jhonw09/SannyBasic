@@ -1,36 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
-import { heroStats } from '../../data/diseases';
+import { diseases } from '../../data/diseases';
 import styles from './Hero.module.css';
-
-function CountUp({ target, suffix }) {
-  const [val, setVal] = useState(0);
-  const ref = useRef(null);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started.current) {
-        started.current = true;
-        const duration = 2000;
-        const steps = 60;
-        const increment = target / steps;
-        let current = 0;
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) { setVal(target); clearInterval(timer); }
-          else setVal(parseFloat(current.toFixed(1)));
-        }, duration / steps);
-      }
-    });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target]);
-
-  return <span ref={ref}>{val}{suffix}</span>;
-}
 
 export default function Hero() {
   const canvasRef = useRef(null);
+  const visualRef = useRef(null);
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = useState(0);
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onMove = (e) => setMouse({ x: e.clientX, y: e.clientY });
+    window.addEventListener('mousemove', onMove);
+    return () => window.removeEventListener('mousemove', onMove);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -45,14 +34,14 @@ export default function Hero() {
     resize();
     window.addEventListener('resize', resize);
 
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 80; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        r: Math.random() * 2 + 0.5,
-        dx: (Math.random() - 0.5) * 0.4,
-        dy: -Math.random() * 0.6 - 0.2,
-        o: Math.random() * 0.5 + 0.1,
+        r: Math.random() * 2.5 + 0.5,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: -Math.random() * 0.7 - 0.2,
+        o: Math.random() * 0.6 + 0.1,
       });
     }
 
@@ -78,12 +67,18 @@ export default function Hero() {
     };
   }, []);
 
+  const parallaxX = (mouse.x / window.innerWidth - 0.5) * 20;
+  const parallaxY = (mouse.y / window.innerHeight - 0.5) * 20;
+
   return (
     <section className={styles.hero} id="inicio">
       <canvas ref={canvasRef} className={styles.canvas} />
       <div className={styles.glow} />
 
-      <div className={styles.content}>
+      <div
+        className={styles.content}
+        style={{ transform: `translateY(${scrollY * 0.15}px)` }}
+      >
         <span className={styles.badge}>🚰 Saneamento Básico</span>
         <h1 className={styles.title}>
           Doenças causadas pela{' '}
@@ -95,37 +90,47 @@ export default function Hero() {
           milhões de pessoas todo ano — a maioria crianças em países em desenvolvimento.
         </p>
         <div className={styles.actions}>
-          <a href="#doencas" className={styles.btnPrimary}>Explorar Doenças</a>
-          <a href="#quiz" className={styles.btnOutline}>Fazer o Quiz →</a>
-        </div>
-
-        <div className={styles.stats}>
-          {heroStats.map(({ value, suffix, label }) => (
-            <div key={label} className={styles.statCard}>
-              <strong><CountUp target={value} suffix={suffix} /></strong>
-              <span>{label}</span>
-            </div>
-          ))}
+          <a href="#doencas" className={styles.btnPrimary}>
+            Explorar Doenças
+            <span className={styles.btnArrow}>→</span>
+          </a>
+          <a href="#quiz" className={styles.btnOutline}>
+            Fazer o Quiz
+            <span>→</span>
+          </a>
         </div>
       </div>
 
-      <div className={styles.visual}>
+      <div
+        ref={visualRef}
+        className={styles.visual}
+        style={{ transform: `translate(${parallaxX}px, ${parallaxY}px)` }}
+      >
         <div className={styles.orb} />
         <div className={styles.dropContainer}>
-          <span className={styles.dropEmoji}>💧</span>
+          <span
+            className={`${styles.dropEmoji} ${hovered ? styles.dropHovered : ''}`}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >💧</span>
           <div className={styles.ring} />
           <div className={`${styles.ring} ${styles.ring2}`} />
           <div className={`${styles.ring} ${styles.ring3}`} />
         </div>
         <div className={styles.floatCard}>
           <span>🦠</span>
-          <div><strong>5 doenças</strong><small>catalogadas</small></div>
+          <div><strong>{diseases.length} doenças</strong><small>catalogadas</small></div>
         </div>
         <div className={`${styles.floatCard} ${styles.floatCard2}`}>
           <span>💀</span>
           <div><strong>58.9 mil</strong><small>mortes/ano por leptospirose</small></div>
         </div>
       </div>
+
+      <a href="#doencas" className={styles.scrollHint}>
+        <span>Rolar para baixo</span>
+        <div className={styles.scrollDot} />
+      </a>
     </section>
   );
 }

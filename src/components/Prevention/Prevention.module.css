@@ -5,7 +5,7 @@
 
 .header {
   text-align: center;
-  margin-bottom: 56px;
+  margin-bottom: 48px;
 }
 
 .pill {
@@ -32,10 +32,11 @@
 
 .header p { color: #bfdbfe; font-size: 1.05rem; }
 
+/* 3 colunas no desktop */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   margin-bottom: 40px;
 }
 
@@ -49,14 +50,16 @@
   box-shadow: 0 2px 16px rgba(0,0,0,0.25);
 }
 
-.card:hover {
-  border-color: rgba(14,165,233,0.55);
-  box-shadow: 0 6px 28px rgba(0,0,0,0.32);
-}
-
+/* card aberto ocupa linha inteira */
 .cardOpen {
+  grid-column: 1 / -1;
   border-color: var(--primary) !important;
   box-shadow: 0 8px 32px rgba(14,165,233,0.22) !important;
+}
+
+.card:not(.cardOpen):hover {
+  border-color: rgba(14,165,233,0.55);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.32);
 }
 
 .cardHeader {
@@ -64,39 +67,39 @@
   text-align: left;
   background: none;
   border: none;
-  padding: 24px;
+  padding: 20px;
   cursor: pointer;
   color: inherit;
 }
 
 .cardTop {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 14px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
-.cardIcon { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+.cardIcon { font-size: 1.6rem; flex-shrink: 0; }
 
-.cardMeta { flex: 1; }
+.cardMeta { flex: 1; min-width: 0; }
 
 .cardMeta h3 {
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   font-weight: 700;
   color: #f0f7ff;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   line-height: 1.3;
 }
 
 .diseaseTags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 4px;
 }
 
 .diseaseTag {
-  font-size: 0.68rem;
-  padding: 2px 8px;
+  font-size: 0.62rem;
+  padding: 2px 7px;
   border-radius: 50px;
   background: rgba(14,165,233,0.18);
   color: #7dd3fc;
@@ -109,78 +112,59 @@
   font-size: 0.7rem;
   color: #7dd3fc;
   flex-shrink: 0;
-  margin-top: 4px;
 }
 
 .cardDesc {
-  font-size: 0.9rem;
-  color: #bfdbfe;
-  line-height: 1.7;
-  margin-bottom: 18px;
-}
-
-.barRow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.barTrack {
-  flex: 1;
-  height: 8px;
-  background: rgba(14,165,233,0.15);
-  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #93c5fd;
+  line-height: 1.6;
+  margin: 8px 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.barFill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  border-radius: 4px;
-  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+.cardDescFull {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  color: #bfdbfe;
+  margin-bottom: 4px;
 }
 
-.pctLabel {
-  font-size: 1rem;
-  font-weight: 800;
-  color: #7dd3fc;
-  min-width: 40px;
-  text-align: right;
-}
-
-.effectLabel {
-  font-size: 0.75rem;
-  color: #93c5fd;
-  font-style: italic;
-}
-
-.stepsList {
+.expandedContent {
   border-top: 1px solid rgba(14,165,233,0.2);
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  background: rgba(0,0,0,0.18);
+  padding: 20px;
+  background: rgba(0,0,0,0.15);
+}
+
+/* steps em 2 colunas quando expandido */
+.stepsList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .stepItem {
   display: flex;
-  gap: 14px;
+  gap: 10px;
   align-items: flex-start;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: #e2e8f0;
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 .stepNum {
   flex-shrink: 0;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: #fff;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -218,10 +202,27 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .cardOpen { grid-column: 1 / -1; }
+}
+
+@media (max-width: 768px) {
+  .section { padding: 72px 0; }
+  .grid { grid-template-columns: 1fr; }
+  .cardOpen { grid-column: 1; }
+  .stepsList { grid-template-columns: 1fr; }
+  .cardHeader { padding: 18px; }
+  .expandedContent { padding: 18px; }
+  .alert { gap: 14px; padding: 20px; }
+}
+
 @media (max-width: 480px) {
   .section { padding: 60px 0; }
-  .grid { grid-template-columns: 1fr; }
-  .cardHeader { padding: 18px; }
-  .stepsList { padding: 16px 18px; }
-  .alert { flex-direction: column; gap: 12px; }
+  .cardHeader { padding: 16px; }
+  .expandedContent { padding: 14px 16px; }
+  .stepItem { font-size: 0.84rem; }
+  .alert { flex-direction: column; gap: 10px; padding: 16px; }
+  .cardDesc { font-size: 0.82rem; }
+  .header p { font-size: 0.92rem; }
 }

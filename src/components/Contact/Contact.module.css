@@ -136,10 +136,15 @@
 }
 
 @media (max-width: 580px) {
-  .grid { grid-template-columns: 1fr; max-width: 480px; }
+  .grid { grid-template-columns: 1fr; max-width: 100%; }
+  .infoCard { padding: 24px 20px; }
 }
 
 @media (max-width: 480px) {
   .section { padding: 60px 0; }
-  .infoCard { padding: 22px 18px; }
+  .infoCard { padding: 20px 16px; }
+  .infoCard h4 { font-size: 0.95rem; }
+  .infoCard ul li { font-size: 0.85rem; }
+  .about { font-size: 0.88rem; }
+  .header p { font-size: 0.92rem; }
 }

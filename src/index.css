@@ -26,7 +26,10 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: 'Inter', sans-serif;
@@ -34,6 +37,8 @@ body {
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -47,8 +52,12 @@ button { cursor: pointer; font-family: inherit; border: none; }
   padding: 0 24px;
 }
 
+@media (max-width: 768px) {
+  .container { padding: 0 18px; }
+}
+
 @media (max-width: 480px) {
-  .container { padding: 0 16px; }
+  .container { padding: 0 14px; }
 }
 
 ::-webkit-scrollbar { width: 6px; }

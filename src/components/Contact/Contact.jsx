@@ -33,7 +33,7 @@ export default function Contact() {
                 <li><a href="https://www.paho.org/pt" target="_blank" rel="noreferrer">🔗 OPAS — Organização Pan-Americana</a></li>
                 <li><a href="https://www.gov.br/saude" target="_blank" rel="noreferrer">🔗 Ministério da Saúde do Brasil</a></li>
               </ul>
-              <p className={styles.tip}>Todo o conteúde deste site é baseado nessas fontes.</p>
+              <p className={styles.tip}>Todo o conteúdo deste site é baseado nessas fontes.</p>
             </div>
           </div>
 

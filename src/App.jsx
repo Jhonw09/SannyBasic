@@ -7,6 +7,7 @@ import Statistics from './components/Statistics/Statistics';
 import Quiz from './components/Quiz/Quiz';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
+import Sanny from './components/Sanny/Sanny';
 import './App.css';
 
 export default function App() {
@@ -16,6 +17,21 @@ export default function App() {
     const onScroll = () => setShowTop(window.scrollY > 400);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Scroll reveal global
+  useEffect(() => {
+    const els = document.querySelectorAll('[data-reveal]');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    els.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
   }, []);
 
   return (
@@ -30,6 +46,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <Sanny />
       <a
         href="https://www.instagram.com/sanny_basic?igsh=OWpubjF3M3MzOXZy"
         target="_blank"

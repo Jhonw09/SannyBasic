@@ -83,7 +83,13 @@
 }
 
 @media (max-width: 540px) {
+  .grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .brand { grid-column: 1 / -1; }
+  .footer { padding: 40px 0 0; }
+  .brand p { max-width: 100%; }
+}
+
+@media (max-width: 380px) {
   .grid { grid-template-columns: 1fr; }
   .brand { grid-column: auto; }
-  .footer { padding: 40px 0 0; }
 }

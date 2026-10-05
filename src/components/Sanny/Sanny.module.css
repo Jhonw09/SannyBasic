@@ -10,27 +10,35 @@
 }
 
 .toggle {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 3px solid #7dd3fc;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 50px;
+  border: 2px solid #7dd3fc;
   background: #0f2235;
   cursor: pointer;
-  padding: 0;
+  padding: 3px 10px 3px 3px;
   position: relative;
   box-shadow: 0 4px 24px rgba(14,165,233,0.4);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
 }
 
 .toggle:hover {
-  transform: scale(1.08);
+  transform: scale(1.05);
   box-shadow: 0 6px 32px rgba(14,165,233,0.6);
 }
 
+.toggleLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #7dd3fc;
+  white-space: nowrap;
+}
+
 .avatar {
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   object-fit: cover;
   object-position: top;
   transition: opacity 0.2s ease;
@@ -40,19 +48,33 @@
   position: absolute;
   top: -4px;
   right: -4px;
-  font-size: 1rem;
-  background: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #ef4444;
+  color: #fff;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  animation: badgePop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes badgePop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.onlineDot {
+  font-size: 0.7rem;
+  color: #4ade80 !important;
+  font-weight: 600;
 }
 
 .chat {
-  width: 320px;
+  width: 340px;
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 8px 40px rgba(0,0,0,0.3);
@@ -105,7 +127,7 @@
 
 .messages {
   flex: 1;
-  max-height: 320px;
+  max-height: 300px;
   overflow-y: auto;
   padding: 16px;
   display: flex;
@@ -127,12 +149,24 @@
   border: 1px solid #bfdbfe;
 }
 
+.bubbleWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 230px;
+}
+
 .bubble {
-  max-width: 220px;
   padding: 10px 14px;
   border-radius: 16px;
   font-size: 0.85rem;
   line-height: 1.5;
+  animation: msgIn 0.25s ease;
+}
+
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .msgSanny .bubble {
@@ -147,6 +181,71 @@
   background: linear-gradient(135deg, #0ea5e9, #6366f1);
   color: #fff;
   border-bottom-right-radius: 4px;
+}
+
+.bubbleLink {
+  font-size: 0.75rem;
+  color: #0ea5e9;
+  font-weight: 600;
+  padding: 4px 10px;
+  background: rgba(14,165,233,0.08);
+  border-radius: 50px;
+  border: 1px solid rgba(14,165,233,0.2);
+  text-decoration: none;
+  align-self: flex-start;
+  transition: all 0.2s ease;
+}
+.bubbleLink:hover { background: rgba(14,165,233,0.18); }
+
+.typingDots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 2px 0;
+}
+
+.typingDots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #94a3b8;
+  animation: dot 1.2s ease-in-out infinite;
+}
+
+.typingDots span:nth-child(2) { animation-delay: 0.2s; }
+.typingDots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.quickRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 12px;
+  border-top: 1px solid #f1f5f9;
+  background: #f8fafc;
+}
+
+.quickBtn {
+  font-size: 0.72rem;
+  padding: 5px 10px;
+  border-radius: 50px;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.quickBtn:hover {
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+  background: rgba(14,165,233,0.06);
 }
 
 .inputRow {
@@ -188,6 +287,13 @@
 .inputRow button:hover { opacity: 0.9; transform: scale(1.05); }
 
 @media (max-width: 480px) {
-  .chat { width: calc(100vw - 48px); }
-  .wrapper { bottom: 16px; left: 16px; }
+  .chat { width: calc(100vw - 32px); max-height: 80vh; }
+  .wrapper { bottom: 14px; left: 14px; }
+  .toggleLabel { display: none; }
+  .toggle { padding: 4px; border-radius: 50%; }
+  .avatar { width: 32px; height: 32px; }
+  .messages { max-height: 240px; }
+  .quickRow { padding: 8px 10px; gap: 5px; }
+  .quickBtn { font-size: 0.68rem; padding: 4px 8px; }
 }
+
