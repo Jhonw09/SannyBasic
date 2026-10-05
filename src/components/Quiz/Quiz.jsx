@@ -1,9 +1,8 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { quizQuestions } from '../../data/diseases';
 import styles from './Quiz.module.css';
 
 const TOTAL = 10;
-const TIMER_SECONDS = 20;
 const DIFFICULTY_CONFIG = {
   1: { label: 'Iniciante', stars: 1, color: '#22c55e', bg: '#dcfce7', border: '#86efac' },
   2: { label: 'Intermediário', stars: 2, color: '#f59e0b', bg: '#fef3c7', border: '#fde68a' },
@@ -112,36 +111,10 @@ export default function Quiz() {
   const [showExpl, setShowExpl] = useState(false);
   const [streak, setStreak] = useState(0);
   const streakRef = useRef(0);
-  const [timeLeft, setTimeLeft] = useState(TIMER_SECONDS);
-  const [timedOut, setTimedOut] = useState(false);
   const [animKey, setAnimKey] = useState(0);
-  const timerRef = useRef(null);
-
-  useEffect(() => {
-    if (selected !== null || finished) return;
-    setTimeLeft(TIMER_SECONDS);
-    timerRef.current = setInterval(() => {
-      setTimeLeft(t => {
-        if (t <= 1) {
-          clearInterval(timerRef.current);
-          setTimedOut(true);
-          setSelected(-1);
-          setShowExpl(true);
-          playSound(false);
-          streakRef.current = 0;
-          setStreak(0);
-          setDifficulty(d => Math.max(1, d - 1));
-          return 0;
-        }
-        return t - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timerRef.current);
-  }, [animKey, finished, selected]);
 
   const handleAnswer = (idx) => {
     if (selected !== null) return;
-    clearInterval(timerRef.current);
     setSelected(idx);
     setShowExpl(true);
     const correct = idx === current.correct;
@@ -173,7 +146,6 @@ export default function Quiz() {
     setCurrentIndex(pick.index);
     setAnswered(nextAnswered);
     setSelected(null);
-    setTimedOut(false);
     setShowExpl(false);
     setAnimKey(k => k + 1);
   };
@@ -191,16 +163,12 @@ export default function Quiz() {
     setShowExpl(false);
     streakRef.current = 0;
     setStreak(0);
-    setTimedOut(false);
     setAnimKey(k => k + 1);
   };
 
   const pct = Math.round((score / TOTAL) * 100);
   const medal = pct >= 80 ? '🏆' : pct >= 60 ? '🌟' : pct >= 40 ? '👏' : '📚';
   const msg = pct >= 80 ? 'Excelente desempenho! Você domina muito bem o tema.' : pct >= 60 ? 'Muito bom! Continue explorando para ampliar seus conhecimentos.' : pct >= 40 ? 'Você começou bem. Revise os conteúdos e tente novamente.' : 'Continue aprendendo: informação confiável ajuda a cuidar da saúde.';
-
-  const timerPct = (timeLeft / TIMER_SECONDS) * 100;
-  const timerColor = timeLeft > 10 ? '#22c55e' : timeLeft > 5 ? '#f59e0b' : '#ef4444';
 
   if (finished) {
     return (
@@ -254,22 +222,6 @@ export default function Quiz() {
             <div className={styles.progressFill} style={{ width: `${(answered / TOTAL) * 100}%` }} />
           </div>
 
-          <div className={styles.timerRow}>
-            <div className={styles.timerTrack}>
-              <div
-                className={styles.timerFill}
-                style={{
-                  width: `${timerPct}%`,
-                  background: timerColor,
-                  transition: selected !== null ? 'none' : 'width 1s linear, background 0.3s ease',
-                }}
-              />
-            </div>
-            <span className={styles.timerNum} style={{ color: timerColor }} aria-live="polite">
-              {timeLeft} s
-            </span>
-          </div>
-
           <h3 className={styles.question}>{current.question}</h3>
 
           <div className={styles.options}>
@@ -290,12 +242,10 @@ export default function Quiz() {
             })}
           </div>
 
-          {timedOut && !showExpl && null}
-
           {showExpl && (
             <div className={`${styles.explanation} ${(selected === current.correct) ? styles.explCorrect : styles.explWrong}`}>
-              <span>{selected === current.correct ? '✅' : timedOut ? '⏱️' : '❌'}</span>
-              <p>{timedOut ? `Tempo esgotado! A resposta correta era: "${current.options[current.correct]}". ` : ''}{current.explanation}</p>
+              <span>{selected === current.correct ? '✅' : '❌'}</span>
+              <p>{current.explanation}</p>
             </div>
           )}
 
